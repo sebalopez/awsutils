@@ -1,0 +1,7 @@
+.idea/
+.cache/
+*.retry
+*.swp
+*.pyc
+*.bak
+*.zip
