@@ -1,11 +1,10 @@
 import jenkins
 
 # Connects to a provided Jenkins server and triggers jobs
-# This requires VPN access
  
 class JenkinsClient(object):
     
-    # url must be complete endpoint, eg http://jenkins.privatedns.new-dev.io:8080
+    # url must be complete endpoint, eg http://jenkins.privatedomain.co:8080
     def __init__(self, url, user=None, pwd=None):
         self.url = url
         if user == None:

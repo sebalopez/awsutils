@@ -1,10 +1,9 @@
-__author__ = 'slopez'
+__author__ = 'sebalopez'
 
 import sys
 import boto3
 import botocore
 import boto3_clients as clients
-import config
 
 
 waiter_status = {
@@ -18,14 +17,15 @@ update_status = ('CREATE_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE
 delete_status = ('ROLLBACK_COMPLETE', 'ROLLBACK_IN_PROGRESS','DELETE_IN_PROGRESS', 'DELETE_FAILED')
 skip_status = ('CREATE_IN_PROGRESS', 'UPDATE_IN_PROGRESS', 'UPDATE_ROLLBACK_IN_PROGRESS')
 
+bucket = '< ENTER TARGET S3 BUCKET FOR TEMPLATES HERE>'
 
 class Stack (object):
 
-    def __init__(self, name, template_file=''):
+    def __init__(self, name, bucket=bucket,template_file=''):
         self.id = self.name = name
         self.template = template_file
         self._exists = True
-        self.bucket = config.s3_template_bucket
+        self.bucket = bucket
         try:
             self.tags = { t['Key']: t['Value'] for t in self.data.get('Tags', []) }
             self.params = { p['ParameterKey']: p['ParameterValue'] for p in self.data.get('Parameters', []) }
@@ -66,7 +66,6 @@ class Stack (object):
     @property
     def resources(self):
         return clients.cloudformation.describe_stack_resources(StackName=self.name)['StackResources']
-
 
     def upload_template(self, validate=True):
         sys.stdout.write('Uploading local version of template to S3...')
@@ -124,7 +123,6 @@ class Stack (object):
                         return 'NOOP'
                     else:
                         return 'ERROR'
-
 
     def delete(self, wait=False, **kwargs):
         try:

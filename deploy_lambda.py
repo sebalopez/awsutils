@@ -1,6 +1,6 @@
-import arn
-__author__ = 'SG0894074'
+__author__ = 'sebalopez'
 
+import arn
 import os
 import errno
 import zipfile
@@ -9,8 +9,7 @@ import botocore
 import boto3
 import boto3_clients as aws
 
-import config
-
+# DEFINE LIST OF FUNCTIONS TO DEPLOY HERE
 lambda_function_list = ()
 
 
@@ -53,7 +52,7 @@ def upload_zip(path, zip_file, bucket):
 # Uploads the zip file containing the Lambda code, then iterates through the provided directory and creates or updates Lambda functions with the deployment package placed into S3
 # If configuration files are found, it will also update the function configuration
 # Note new functions cannot be deployed without a config file
-def deploy_functions(bucket=config.S3_BUCKET, region='us-east-1', function_dir=os.getcwd(), function_zip='lambda.zip', s3_path='/', function_prefix='', role=None, create=True, update=True):
+def deploy_functions(bucket, region='us-east-1', function_dir=os.getcwd(), function_zip='lambda.zip', s3_path='/', function_prefix='', role=None, create=True, update=True):
 
     upload_zip(s3_path,function_zip,bucket)
     lambda_s3_zip_path = '%s/%s' %(s3_path,function_zip)

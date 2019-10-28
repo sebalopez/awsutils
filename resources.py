@@ -1,3 +1,4 @@
+__author__ = 'sebalopez'
 import arn
 import datetime
 import dateutil.parser
@@ -410,11 +411,11 @@ class AutoScalingGroup_Resource(Resource):
         if self._data['DesiredCapacity'] == 0:
             ### TEMPORARYY SOOLUTION UNTIL WE CAN RESOLVE THE THROTTLING ISSUES
             return datetime.datetime.utcnow() - self._data['CreatedTime'].replace(tzinfo=None)
-#            activities = clients.autoscaling.describe_scaling_activities(AutoScalingGroupName=self.name)['Activities']
-#            if len(activities) > 0:
-#                return datetime.datetime.utcnow() - activities[0]['StartTime'].replace(tzinfo=None)
-#            else:
-#                return datetime.datetime.utcnow() - self._data['CreatedTime'].replace(tzinfo=None)
+            #            activities = clients.autoscaling.describe_scaling_activities(AutoScalingGroupName=self.name)['Activities'] 
+            #            if len(activities) > 0:
+            #                return datetime.datetime.utcnow() - activities[0]['StartTime'].replace(tzinfo=None)
+            #            else:
+            #                return datetime.datetime.utcnow() - self._data['CreatedTime'].replace(tzinfo=None)
         else:
             return datetime.timedelta(0)
 
@@ -427,12 +428,11 @@ class AutoScalingGroup_Resource(Resource):
         else:
             ### TEMPORARYY SOOLUTION UNTIL WE CAN RESOLVE THE THROTTLING ISSUES
             return datetime.datetime.utcnow() - self._data['CreatedTime'].replace(tzinfo=None)
-#            activities = clients.autoscaling.describe_scaling_activities(AutoScalingGroupName=self.name)['Activities']
-#            if len(activities) > 0:
-#                return datetime.datetime.utcnow() - activities[0]['StartTime'].replace(tzinfo=None)
-#            else:
-#                return datetime.datetime.utcnow() - self._data['CreatedTime'].replace(tzinfo=None)
-
+            #            activities = clients.autoscaling.describe_scaling_activities(AutoScalingGroupName=self.name)['Activities']
+            #            if len(activities) > 0:
+            #                return datetime.datetime.utcnow() - activities[0]['StartTime'].replace(tzinfo=None)
+            #            else:
+            #                return datetime.datetime.utcnow() - self._data['CreatedTime'].replace(tzinfo=None)
 
 
 class S3Bucket_Resource(Resource):
@@ -464,7 +464,6 @@ class S3Bucket_Resource(Resource):
         super(S3Bucket_Resource, self).terminate()
 
 
-# TODO: only used by VPCCleanup, may need more stuff implemented
 class LaunchConfiguration_Resource(Resource):
     _type = 'autoscaling'
     _terminate_func = 'delete_launch_configuration'

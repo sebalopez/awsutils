@@ -228,7 +228,6 @@ class ASGAPI(APIHelper):
     _describe_resource_id_property = 'AutoScalingGroupName'
 
 
-
 class S3API(APIHelper):
     _type = 's3'
     _resource_class = S3Bucket_Resource
